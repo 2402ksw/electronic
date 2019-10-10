@@ -1,0 +1,43 @@
+print('지점 사이의 합성저항값을 모두 입력해주세요')
+print('ex) 1,2:3 2,3:6 3,4:2 4,1:1')
+res=input().split()
+print('전압을 걸어줄 두 지점과 걸어줄 전압을 입력해주세요')
+print('ex) 1,3:30')
+vol=input().replace(',',' ').replace(':',' ').split()
+strtp=int(vol[0])
+fnshp=int(vol[1])
+pnpvol=int(vol[2])
+rsdc={}
+for i in res:
+    n=i.replace(',',' ').replace(':',' ').split()
+    if int(n[0]) not in rsdc:
+        rsdc[int(n[0])]={}
+    rsdc[int(n[0])][int(n[1])]=int(n[2])
+    if int(n[1]) not in rsdc:
+        rsdc[int(n[1])]={}
+    rsdc[int(n[1])][int(n[0])]=int(n[2])
+def intg(a):
+    if not a==strtp and not a==fnshp and a:
+        if len(rsdc[a])==2:
+            ssee=[]
+            for i in rsdc[a]:
+                ssee.append(i)
+            serisum=rsdc[a][ssee[0]]+rsdc[a][ssee[1]]
+            del(rsdc[a])
+            if ssee[1] in rsdc[ssee[0]]:
+                prres=rsdc[ssee[0]][ssee[1]]
+                rstres=(serisum*prres)/(serisum+prres)
+                rsdc[ssee[0]][ssee[1]]=rstres
+                rsdc[ssee[1]][ssee[0]]=rstres
+            else:
+                rsdc[ssee[0]][ssee[1]]=serisum
+                rsdc[ssee[1]][ssee[0]]=serisum
+for i in range(100):
+    for j in rsdc:
+        if not j==strtp and not j==fnshp and j:
+            if len(rsdc[j])==2:
+                intg(i)
+                break
+pnpres=rsdc[strtp][fnshp]
+pnpirr=pnpvol/pnpres
+print('전체전압 =',pnpvol,', 전체저항 =',pnpres,', 전체전류 =',pnpirr)
