@@ -71,7 +71,7 @@ else:
             sum_par2 += 1/a[j] 
             sum_par2 = 1/sum_par2 
         for j in range(len(a)):
-            print(i,"에서",a[j],"Ω에 흐르는 전류는",tot_i*a[j]/sum_par2,"A이며, 거기에 걸리는 전압은",tot_i*(a[j])**2/sum_par2,"V입니다.") 
+            print(i,"에서",a[j],"Ω에 흐르는 전류는",tot_i*sum_par2/a[j],"A이며, 거기에 걸리는 전압은",tot_i*sum_par2,"V입니다.") 
 print("소비전력도 알고 싶으신가요?")
 ans = str(input())
 if 'y' in ans:
